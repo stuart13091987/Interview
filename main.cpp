@@ -44,6 +44,10 @@ int countFullTimeEmployees(const std::vector <Employee> &employees)
 //Zadanie 2
 //Uzupełnij funkcję countUniqueNumbers1 , zliczającą ilość unikalnych (takich, które
 //występują dokładnie raz) liczb w przekazanej kolekcji.
+int countUniqueNumbers1(const std::vector<int>& v)
+{
+// put your code here
+}
 
 int countUniqueNumbers1(std::vector<Items> v)
 {
@@ -95,10 +99,10 @@ bool checkTriangle(int a, int b int c)
 }
 
 //Przypadki testowe
-//1 a lub b lub c równe 0 sprawdz ze wynik=FALSE
+//1 a lub b lub c równe 0 sprawdz ze wynik assert FALSE
 
-//2 a+b <c wynik FALSE
-//3 a+b >c wynik
+//2 a+b <c wynik assert FALSE
+//3 a + b > c) && (a + c > b) && (c + b > a))&& (a!=0) && (b!=0)&& (c!=0) wynik assert TRUE
 
 //Zadanie 4
 //Proszę wykonać Code Review poniższego kodu.
@@ -113,8 +117,6 @@ auto row = mysql_fetch_row(res);
 return boost::lexical_cast<unsigned int>(res[0]);
 }
 
-//Zadanie 4
-//Proszę wykonać Code Review poniższego kodu.
 //Code review
 
 unsigned int getNumberOfEmployeesEarningAtLeast(const unsigned int& minimumSalary)
@@ -123,16 +125,14 @@ std::string query = "SELECT COUNT(*) FROM 'Employee' WHERE `salary` >= " + std::
 mysql_real_query(g_database, query.c_str(), query.length());  // mysql_real_query return 1 if success 0 if failure
 
 auto res = mysql_store_result(g_database); // condition checking if my_sql_real_query was 1 then proceed
-auto row = mysql_fetch_row(res);
+auto row = mysql_fetch_row(res);    // unused variable row
 return boost::lexical_cast<unsigned int>(res[0]);
 }
 
 //Co trzeba zmienić, jeśli chcemy otrzymać liczbę pracowników zarabiających minimum
-//podaną kwotę oraz będących na pełnym etacie. Jakie testy trzeba wykonać? Jakie
-//przypadki testowe rozważyć?
+//podaną kwotę oraz będących na pełnym etacie.
 
-int main()
-{
-    cout << "Hello World!" << endl;
-    return 0;
-}
+//dodac AND WHERE EMPLYMENTTYPE = PERMANENT
+
+//Jakie testy trzeba wykonać? Jakie przypadki testowe rozważyć?
+//
