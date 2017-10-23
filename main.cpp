@@ -18,6 +18,7 @@ using namespace std;
 //Bazując na poniższym fragmencie kodu, uzupełnij funkcję countFullTimeEmployees,
 //zliczającą pracowników zatrudnionych na pełen etat.
 
+
 enum class EmploymentType { FullTime, PartTime };
 
 struct Employee
@@ -31,7 +32,8 @@ struct Employee
 int countFullTimeEmployees(const std::vector <Employee> &employees)
 {
     int fulltimeCount = 0;
-    for( auto it = employees.begin(); it < employees.end(); it++)
+    std::vector<Employee>::const_iterator it;
+    for( it = employees.begin(); it != employees.end(); it++)
     {
         if(it->employmentType == EmploymentType::FullTime)
             fulltimeCount++;
@@ -39,7 +41,6 @@ int countFullTimeEmployees(const std::vector <Employee> &employees)
 
     return fulltimeCount;
 }
-
 
 //Zadanie 2
 //Uzupełnij funkcję countUniqueNumbers1 , zliczającą ilość unikalnych (takich, które
@@ -49,16 +50,16 @@ int countUniqueNumbers1(const std::vector<int>& v)
 // put your code here
 }
 
-int countUniqueNumbers1(std::vector<Items> v)
+int countUniqueNumbers1(std::vector<int> &v)
 {
     std::sort(v.begin(), v.end()); // sort items
-    std::unique unique;
     int uniqueCount = std::unique(v.begin(), v.end()) - v.begin(); // return number of unique
     return uniqueCount;
 }
 
 //Jaka jest złożoność czasowa Twojej funkcji?
-//   O(n log n )
+// Czasowa zalezna od sprzetu.
+// Jezeli chodzilo o zlozonosc obliczeniowa to ->  O(n log n )
 
 //Jaka jest jej złożoność pamięciowa?
 // rozmiar wektora v
@@ -67,16 +68,22 @@ int countUniqueNumbers1(std::vector<Items> v)
 //1000]. Zaproponuj jak najbardziej optymalną czasowo funkcję countUniqueNumbers2 ,
 //wykorzystującą ten fakt i zliczającą unikalne liczby w kolekcji.
 
+//std::vector -> copy std::set
+
+//drzewach czerwony czarne
+
+//check rozmiar
 
 int countUniqueNumbers2(const std::vector<int>& v)
 {
-    std::sort(v.begin(), v.end());
-    return uniqueCount = std::unique(v.begin(), v.end()) - v.begin();
-// put your code here
+    std::sort(v.begin(), v.end()); // sort items
+    int uniqueCount = std::unique(v.begin(), v.end()) - v.begin(); // return number of unique
+    return uniqueCount;
 }
 
 //Jaka jest złożoność czasowa Twojej funkcji?
-//   O(n log n )
+// Czasowa zalezna od sprzetu.
+// Jezeli chodzilo o zlozonosc obliczeniowa to ->  O(n log n )
 
 //Jaka jest jej złożoność pamięciowa?
 // rozmiar wektora v
@@ -86,9 +93,9 @@ int countUniqueNumbers2(const std::vector<int>& v)
 //sprawdza czy można zbudować trójkąt z boków o takich długościach. Jakie testy można wykonać?
 //Podaj przypadki testowe.
 
-bool checkTriangle(int a, int b int c)
+bool checkTriangle(unsigned int a, unsigned int b, unsigned int c)
 {
-    if((a!=0) && (b!=0)&& (c!=0))
+    if((a!=0) && (b!=0) && (c!=0))
     {
         if((a + b > c) && (a + c > b) && (c + b > a))
             return 1;
@@ -117,6 +124,7 @@ auto row = mysql_fetch_row(res);
 return boost::lexical_cast<unsigned int>(res[0]);
 }
 
+#include <boost/lexical_cast.hpp>
 //Code review
 
 unsigned int getNumberOfEmployeesEarningAtLeast(const unsigned int& minimumSalary)
@@ -125,14 +133,21 @@ std::string query = "SELECT COUNT(*) FROM 'Employee' WHERE `salary` >= " + std::
 mysql_real_query(g_database, query.c_str(), query.length());  // mysql_real_query return 1 if success 0 if failure
 
 auto res = mysql_store_result(g_database); // condition checking if my_sql_real_query was 1 then proceed
-auto row = mysql_fetch_row(res);    // unused variable row
+auto row = mysql_fetch_row(res);    // unused variable row, result of operation not returned by function getNumberOfEmployeesEarningAtLeast
 return boost::lexical_cast<unsigned int>(res[0]);
 }
+
+//: błąd: ‘g_database’ was not declared in this scope
+//mysql_real_query(g_database, query.c_str(), query.length());
+// ‘mysql_real_query’ was not declared in this scope
+// mysql_real_query(g_database, query.c_str(), query.length());
+
 
 //Co trzeba zmienić, jeśli chcemy otrzymać liczbę pracowników zarabiających minimum
 //podaną kwotę oraz będących na pełnym etacie.
 
-//dodac AND WHERE EMPLYMENTTYPE = PERMANENT
+//dodac AND EMPLYMENTTYPE = PERMANENT
 
 //Jakie testy trzeba wykonać? Jakie przypadki testowe rozważyć?
-//
+//1 minimum salary = 0
+//2
